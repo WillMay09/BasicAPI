@@ -4,7 +4,7 @@
   "description": "This is a simple API designed for practice with node.js",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --env-file=.env app.js"
+    "start": "nodemon --env-file=.env app2.js"
   },
   "repository": {
     "type": "git",
