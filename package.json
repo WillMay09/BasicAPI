@@ -1,0 +1,22 @@
+{
+  "name": "basicapi",
+  "version": "1.0.0",
+  "description": "This is a simple API designed for practice with node.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon --env-file=.env app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/WillMay09/BasicAPI.git"
+  },
+  "author": "William Mayhood",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WillMay09/BasicAPI/issues"
+  },
+  "homepage": "https://github.com/WillMay09/BasicAPI#readme",
+  "dependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
