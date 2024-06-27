@@ -17,9 +17,6 @@ app.use('/api/posts', posts);
 
 
 
-
-
-
  
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
