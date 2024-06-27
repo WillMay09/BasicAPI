@@ -8,8 +8,10 @@ let posts = [
     {id: 3, title: 'Post Three'},
     ];
 
-   //get multiple posts
-   router.get('/', (req, res) =>{
+
+
+   //get all posts
+   router.get('/', (req, res, next) =>{
     
     const limit = parseInt(req.query.limit);
 
@@ -27,25 +29,27 @@ let posts = [
 });
 
 //getting a single post
-router.get('/:id', (req, res) =>{
+router.get('/:id', (req, res, next) =>{
 
     const id = parseInt(req.params.id);
     //res.json(posts.filter((post) => post.id === id));
     const post = posts.find((post) => post.id === id);
 
     if(!post){
-        res.status(404).json({msg: `A post with the id of ${id} was not found`});
+       const error = new Error(`A post with the id of ${id} was not found`);
+       error.status = 404;
+       return next(error);//passing in error object to next middleware
 
 
-    }else{
+    }
 
         res.status(200).json(post);
-    }
+    
 
 });
 
 //create new post
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
 
     console.log(req.body);
 
@@ -58,7 +62,10 @@ router.post('/', (req, res) => {
     };
 
     if(!newPost.title){
-        return res.status(400).json({msg: 'Please include a title'});
+        const error = new Error('Please include a title');
+       error.status = 400;
+       return next(error);//passing in error object to next middleware
+
 
 
     }
@@ -69,7 +76,7 @@ router.post('/', (req, res) => {
 });
 
 //Update Post
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
 
 const id = parseInt(req.params.id);
 const post = posts.find((post) => post.id === id);
@@ -88,7 +95,7 @@ res.status(200).json(posts);
 });
 
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
 //find id
 const id = parseInt(req.params.id);
 
@@ -100,10 +107,15 @@ const post = posts.find((post) => post.id === id);
 
 if(!post){
 
-    return res.status(404).json(`Cannot find post with id of ${id}`);
+    const error = new Error(`Cannot find post with id ${id}`);
+    error.status = 404;
+    return next(error);//passing in error object to next middleware
+
+
 }
 
 posts = posts.filter((post)=> post.id !== id);//update post array with all post except for the one chosen
+
 res.status(200).json(posts);
 
 });
