@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 
-const posts = [
+let posts = [
     {id : 1, title: 'Post One'},
     {id: 2, title: 'Post Two'},
     {id: 3, title: 'Post Three'},
@@ -83,6 +83,27 @@ if(!post){
 }
 
 post.title = req.body.title;//update post with new title found in the body
+res.status(200).json(posts);
+
+});
+
+
+router.delete('/:id', (req, res) => {
+//find id
+const id = parseInt(req.params.id);
+
+//find post
+
+const post = posts.find((post) => post.id === id);
+
+//handle error if post doesn't exist
+
+if(!post){
+
+    return res.status(404).json(`Cannot find post with id of ${id}`);
+}
+
+posts = posts.filter((post)=> post.id !== id);//update post array with all post except for the one chosen
 res.status(200).json(posts);
 
 });
